@@ -1,0 +1,64 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd">
+
+	<bean class="org.springframework.batch.test.JobLauncherTestUtils"/>
+
+	<!-- Actual Job -->
+    <batch:job id="reportJob">
+        <batch:step id="step1">
+            <batch:tasklet>
+                <batch:chunk reader="mongodbItemReader" writer="xmlItemWriter" commit-interval="1">
+                </batch:chunk>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+
+	<!-- Mongo Item Reader -->
+    <bean id="mongodbItemReader" class="org.springframework.batch.item.data.MongoItemReader">
+        <property name="template" ref="mongoTemplate" />
+        <property name="collection" value="report" />
+        <property name="targetType" value="com.mkyong.model.Report" /> <!-- IMP -->
+        <property name="query" value="{'_id':{$gt:0} }" />
+        <property name="sort">
+        	<util:map>
+        		 <entry key="id" value="#{T(org.springframework.data.domain.Sort.Direction).ASC}" /> 
+        	</util:map>
+        </property>
+    </bean>
+
+	<!-- Stax Event Item Writer to write to XML file -->
+    <!-- <bean id="xmlItemWriter" class="org.springframework.batch.item.xml.StaxEventItemWriter"> -->
+    <bean id="xmlItemWriter" class="com.mkyong.model.IndentingStaxEventItemWriter">
+        <property name="resource" value="file:outputs/report.xml" />
+        <property name="encoding" value="ISO-8859-1" />
+        <property name="version" value="1.0" />
+        <property name="marshaller" ref="reportMarshaller" />
+        <property name="rootTagName" value="record" />
+        <!-- TRUE means, that output file will be overwritten if exists - default is TRUE -->
+        <property name="overwriteOutput" value="true" />
+    </bean>
+
+	<!--  -->
+    <bean id="reportMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="classesToBeBound" value="com.mkyong.model.Report" />
+        <property name="marshallerProperties">
+        	<map>
+        		<entry>
+        			<key>
+        				<util:constant static-field="javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT"/>
+        			</key>
+        			<value type="java.lang.Boolean">true</value>
+        		</entry>
+        	</map>
+        </property>
+   </bean> 
+</beans>

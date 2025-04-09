@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="FileTxtToFileCsvApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="txt-to-csv-converter" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.github.daggerok.batch.filetxttofilecsv.FileTxtToFileCsvApplication" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

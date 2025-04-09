@@ -1,0 +1,13 @@
+.gradle/
+.idea/
+build/
+gradle/
+gradlew
+gradlew.bat
+*.iml
+.DS_Store
+HTE2NP.xml
+HTE2NP-anomalies.csv
+merchant_month.json
+daily_balance.json
+calculated/

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<record>
+  <record id="1">
+    <date>01-06-2013</date>
+    <impression>139237</impression>
+    <clicks>40</clicks>
+    <earning>220.90</earning>
+  </record>
+  <record id="2">
+    <date>02-06-2013</date>
+    <impression>339100</impression>
+    <clicks>60</clicks>
+    <earning>320.88</earning>
+  </record>
+  <record id="3">
+    <date>03-06-2013</date>
+    <impression>431436</impression>
+    <clicks>76</clicks>
+    <earning>270.80</earning>
+  </record>
+  <record id="4">
+    <date>12-03-2016</date>
+    <impression>534987</impression>
+    <clicks>43</clicks>
+    <earning>454.80</earning>
+  </record>
+</record>
