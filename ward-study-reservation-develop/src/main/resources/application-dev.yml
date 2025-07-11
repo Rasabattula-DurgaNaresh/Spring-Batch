@@ -1,0 +1,80 @@
+
+server:
+  port: 8081
+
+spring:
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher # swagger 표시 위함
+
+  batch:
+    job:
+      enabled: false
+      names: ${job.name:NONE}
+    jdbc:
+      initialize-schema: never
+#  main:
+#    web-application-type: none
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+  session:
+    store-type: redis
+
+  redis:
+    cache:
+      host: redis-cache
+      port: 6379
+    session:
+      host: redis-session
+      port: 6380
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql_db:3306/${MYSQL_DATABASE}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: update  # prod 배포시 validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      use-new-id-generator-mappings: false
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+      dialect: org.hibernate.dialect.MySQL8Dialect
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${SPRING_MAIL_ID}
+    password: ${SPRING_MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+
+app:
+  firebase-configuration-file: ./file-storage-68596-firebase-adminsdk-5bv5f-260ab6cc65.json
+  firebase-bucket: file-storage-68596.appspot.com
+
+
+naver:
+  url:
+    search:
+      local: https://openapi.naver.com/v1/search/local.json
+      image: https://openapi.naver.com/v1/search/image
+  client:
+    id: Zi3o1uQftp59zuIqEAz4
+    secret: iy6YKSWpLM
